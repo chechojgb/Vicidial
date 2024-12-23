@@ -1,0 +1,5 @@
+<div>
+    @livewireStyles
+    
+    @livewireScripts
+</div>
