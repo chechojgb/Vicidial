@@ -16,7 +16,7 @@
     </div>
   </div>
 </div> --}}
-<div class="w-full max-w-md px-4 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+{{-- <div class="w-full max-w-md px-4 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
 
   <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border cursor-pointer hover:shadow-xl hover:bg-blue-100 transition-all duration-300">
       <div class="flex-auto p-4">
@@ -40,4 +40,29 @@
           </div>
       </div>
 </div>
+</div> --}}
+
+
+<div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+
+  <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border cursor-pointer hover:shadow-xl hover:bg-blue-100 transition-all duration-300">
+      <div class="flex-auto p-4">
+          <div class="flex flex-row -mx-3">
+              <div class="flex-none w-2/3 max-w-full px-3">
+                  <div>
+                      <p class="mb-0 font-sans text-sm font-semibold leading-normal">{{ $title }}</p>
+                      <h5 class="mb-0 font-bold">{{ $count }}
+                          <span class="text-sm leading-normal font-weight-bolder text-blue-400">{{ $add }}</span>
+                      </h5>
+                  </div>
+              </div>
+              <div class="px-3 text-right basis-1/3">
+                <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center shadow-md ml-4">
+                  <i class="{{$icon}} text-white text-xl"></i>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
 </div>
