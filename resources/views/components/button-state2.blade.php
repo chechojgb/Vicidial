@@ -57,12 +57,17 @@
                   </div>
               </div>
               <div class="px-3 text-right basis-1/3">
-                <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center shadow-md ml-4">
-                  <i class="{{$icon}} text-white text-xl"></i>
+                <div class="inline-block w-12 h-12 text-center  bg-blue-500 rounded-full items-center justify-center shadow-md ml-4">
+                  <i class="{{$icon}} ni leading-none ni-single-02 text-lg relative top-3.5 text-white"></i>
                 </div>
+
               </div>
           </div>
       </div>
   </div>
 
 </div>
+
+{{-- <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-blue-500 to-blue-600">
+  <i class="ni leading-none ni-single-02 text-lg relative top-3.5 text-white"></i>
+</div> --}}
