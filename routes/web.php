@@ -39,4 +39,5 @@ Route::get('/admin/filter/{route}', [ControlAdmin::class, 'index'])->name('Filte
 Route::get('/admin/remote-agents/{route}', [ControlAdmin::class, 'index'])->name('Remote-Agents-Admin');
 
 Route::get('real/time/reports/admin', [ControlAdmin::class, 'showAggentsLogged'])->name('Real-Time-Reports-Admin');
-
+Route::get('test', [ControlAdmin::class, 'test'])->name('test');
+Route::get('generate-pdf', [ControlAdmin::class, 'generatePdf'])->name('generate-pdf');
