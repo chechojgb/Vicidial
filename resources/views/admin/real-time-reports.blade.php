@@ -14,7 +14,7 @@
     <div class="p-6 bg-white min-h-screen">
         <div class="flex flex-wrap -mx-3 space-y-4">
             <div></div>
-            <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="0" add="active calls overview" />
+            <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="0" add="active calls overview"/>
             <x-button-state2 icon="fa-solid fa-bell" title="Calls ringing" count="0" add="ringing queue" />
             <x-button-state2 icon="fa-solid fa-clock" title="Calls waiting for agents" count="0" add="awaiting assignment" />
             <x-button-state2 icon="fa-solid fa-mobile-retro" title="Call in IVR" count="0" add="ivr interactions" />

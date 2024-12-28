@@ -42,10 +42,10 @@ class ControlAdmin extends Controller
         set_time_limit(300);
 
         // Renderizar la vista a HTML
-        $html = view('admin.real-time-reports')->render();
+        $html = view('admin.test')->render();
 
-        // Generar el PDF utilizando Browsershot y devolverlo como una respuesta de descarga
         $pdf = Browsershot::html($html)
+            ->showBackground()
             ->setNodeBinary('C:\Program Files\nodejs\node.exe') // Ruta correcta de Node.js
             ->setNpmBinary('C:\Program Files\nodejs\npm.cmd') // Ruta correcta de npm
             ->format('A4')
@@ -56,6 +56,9 @@ class ControlAdmin extends Controller
             ->header('Content-Disposition', 'attachment; filename="realtime_report.pdf"');
     }
 
-
+    public function testView()
+    {
+        return view('admin.test');
+    }
 
 }
