@@ -40,6 +40,7 @@ Route::get('/admin/remote-agents/{route}', [ControlAdmin::class, 'index'])->name
 
 Route::get('real/time/reports/admin', [ControlAdmin::class, 'showAggentsLogged'])->name('Real-Time-Reports-Admin');
 
+
 Route::get('/locale/{locale}', function ($locale) {
     $available_locales = config('app.available_locales');
     
@@ -49,3 +50,7 @@ Route::get('/locale/{locale}', function ($locale) {
     }
     return back();
 })->name('lang')->middleware('web');
+=======
+Route::get('test', [ControlAdmin::class, 'testView'])->name('test');
+Route::get('generate-pdf', [ControlAdmin::class, 'generatePdf'])->name('generate-pdf');
+
