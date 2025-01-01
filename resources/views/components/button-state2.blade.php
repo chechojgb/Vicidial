@@ -50,9 +50,9 @@
           <div class="flex flex-row -mx-3">
               <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
-                      <p class="mb-0 font-sans text-sm font-semibold leading-normal">{{ $title }}</p>
+                      <p class="mb-0 font-sans text-sm font-semibold leading-normal">{{ __($title) }}</p>
                       <h5 class="mb-0 font-bold">{{ $count }}
-                          <span class="text-sm leading-normal font-weight-bolder text-blue-400">{{ $add }}</span>
+                          <span class="text-sm leading-normal font-weight-bolder text-blue-400">{{ __($add)   }}</span>
                       </h5>
                   </div>
               </div>
