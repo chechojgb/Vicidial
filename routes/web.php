@@ -50,7 +50,7 @@ Route::get('/locale/{locale}', function ($locale) {
     }
     return back();
 })->name('lang')->middleware('web');
-=======
+
 Route::get('test', [ControlAdmin::class, 'testView'])->name('test');
 Route::get('generate-pdf', [ControlAdmin::class, 'generatePdf'])->name('generate-pdf');
 
