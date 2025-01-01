@@ -30,5 +30,15 @@
     "If you did not receive the email": "Si no has recibido el email",
     "click here to request another": "pulsa aquí para que te enviemos otro",
     "All rights reserved.":  "Todos los derechos reservados.",
-    "Calls ringing": "Llamadas sonando"
+    "Calls ringing": "Llamadas sonando",
+    "Current active calls": "Llamadas activas",
+    "Calls waiting for agents": "Llamadas en espera de agentes",
+    "Call in IVR": "Llamada en IVR",
+    "Callback queue calls": "Llamadas en cola de retorno",
+    "Agents logged in": "Agentes conectados",
+    "Agents in calls": "Agentes en llamadas",
+    "Agents waiting": "Agentes en espera",
+    "Paused agents": "Agentes en pausa",
+    "Agents in dead calls": "Agentes en llamadas muertas",
+    "Agents in dispo": "Agentes en disposición"
 }
