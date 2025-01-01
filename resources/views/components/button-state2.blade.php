@@ -57,7 +57,7 @@
                   </div>
               </div>
               <div class="px-3 text-right basis-1/3">
-                <div class="inline-block w-12 h-12 text-center  bg-blue-500 rounded-full items-center justify-center shadow-md ml-4">
+                <div class="inline-block w-12 h-12 text-center rounded-full items-center justify-center shadow-md ml-4" style="background-color: #60A5FA;">
                   <i class="{{$icon}} ni leading-none ni-single-02 text-lg relative top-3.5 text-white"></i>
                 </div>
 
