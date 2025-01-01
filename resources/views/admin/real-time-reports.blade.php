@@ -6,7 +6,7 @@
 
 <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2">
 
-    <x-lenguage></x-lenguage>\
+    <x-lenguage></x-lenguage>
 
     <div
         class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start">

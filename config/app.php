@@ -16,7 +16,22 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'vicidial'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Available Languages
+    |--------------------------------------------------------------------------
+    |
+    |List all locales that your application works with. 
+    |
+    */
+
+    'available_locales' => [
+        'English' => 'en',
+        'Spanish' => 'es',
+        'Portuguese' => 'pt'
+    ],
 
     /*
     |--------------------------------------------------------------------------
