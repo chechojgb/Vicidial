@@ -646,7 +646,7 @@ if ($auth)
 		{$RS_UGlatencyALLOWED=1;}
 	}
 
-#  and (preg_match("/MONITOR|BARGE|HIJACK|WHISPER/",$monitor_active) ) )
+# y (preg_match("/MONITOR|BARGE|HIJACK|WHISPER/",$monitor_active) ) )
 if ( (!isset($monitor_phone)) or (strlen($monitor_phone)<1) )
 	{
 	$stmt="select phone_login from vicidial_users where user='$PHP_AUTH_USER';";

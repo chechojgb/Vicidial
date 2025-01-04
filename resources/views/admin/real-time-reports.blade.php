@@ -6,7 +6,7 @@
 
 <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2">
 
-    <x-lenguage></x-lenguage>
+    <x-lenguage/>
     <x-modal-realTime/>
 
     <div
