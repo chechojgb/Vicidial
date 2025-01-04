@@ -36,7 +36,6 @@ class ControlAdmin extends Controller
     // Pasar los datos a la vista utilizando compact
     return view('admin.real-time-reports');
    }
-
     public function generatePdf()
     {
         set_time_limit(300);
@@ -55,10 +54,18 @@ class ControlAdmin extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="realtime_report.pdf"');
     }
-
     public function testView()
     {
         return view('admin.test');
+    }
+
+    public function testBD()
+    {
+        $systemSettings = DB::select("SELECT use_non_latin, outbound_autodial_active, slave_db_server, reports_use_slave_db, enable_languages, language_method, agent_whisper_enabled, report_default_format, enable_pause_code_limits, allow_web_debug FROM system_settings;");
+      
+
+        
+        return view('admin.testBD' , compact( 'systemSettings'));
     }
 
 }
