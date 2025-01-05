@@ -5,11 +5,13 @@
 @section('content')
 
 <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2">
-
+{{-- 
     <x-lenguage/>
-    <x-modal-realTime/>
-
-    <div
+    <x-modal-realTime/> --}}
+    @foreach ($campaignSettings as $info)
+        {{$info->campaign}}
+    @endforeach
+    {{-- <div
         class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start">
     </div>
     <div class="p-6 bg-white min-h-screen">
@@ -331,7 +333,7 @@
         
 
         
-    </div>
+    </div> --}}
     <div data-dial-init class="fixed end-6 bottom-6 group">
         <div id="speed-dial-menu-default" class="flex flex-col items-center hidden mb-4 space-y-2">
             {{-- <button type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left"
