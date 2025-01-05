@@ -9,17 +9,34 @@ class RealtimeReportController extends Controller
 {
     public function index(Request $request)
     {
-        // Lógica de autenticación y autorización
-        $PHP_AUTH_USER = '6666';
+        $campaignSettings = DB::table('vicidial_campaigns')->select(
+            'campaign_id',
+            'auto_dial_level',
+            'dial_status_a',
+            'dial_status_b',
+            'dial_status_c',
+            'dial_status_d',
+            'dial_status_e',
+            'lead_order',
+            'lead_filter_id',
+            'hopper_level',
+            'dial_method',
+            'adaptive_maximum_level',
+            'adaptive_dropped_percentage',
+            'adaptive_dl_diff_target',
+            'adaptive_intensity',
+            'available_only_ratio_tally',
+            'adaptive_latest_server_time',
+            'local_call_time',
+            'dial_timeout',
+            'dial_statuses'
+        )->get();
 
-        // Consultas a la base de datos
-        $systemSettings = DB::table('system_settings')->select('use_non_latin', 'outbound_autodial_active', 'slave_db_server', 'reports_use_slave_db', 'enable_languages', 'language_method', 'agent_whisper_enabled', 'report_default_format', 'enable_pause_code_limits', 'allow_web_debug')->first();
-
-        $userSettings = DB::table('vicidial_users')->where('user', $PHP_AUTH_USER)->first();
+        dd($campaignSettings);
 
         // Más consultas y lógica aquí...
 
-        return view('admin.realtime_report', compact('systemSettings', 'userSettings'));
+        return view('admin.real-time-reports', compact('campaignSettings'));
     }
 
     public function update(Request $request)

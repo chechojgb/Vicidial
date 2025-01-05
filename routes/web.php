@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ControlAdmin;
+use App\Http\Controllers\RealtimeReportController;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Dashboard as LivewireDashboard;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,7 @@ Route::get('/admin/lists/{route}', [ControlAdmin::class, 'index'])->name('List-A
 Route::get('/admin/filter/{route}', [ControlAdmin::class, 'index'])->name('Filter-Admin');
 Route::get('/admin/remote-agents/{route}', [ControlAdmin::class, 'index'])->name('Remote-Agents-Admin');
 
-Route::get('real/time/reports/admin', [ControlAdmin::class, 'showAggentsLogged'])->name('Real-Time-Reports-Admin');
+Route::get('real/time/reports/admin', [RealtimeReportController::class, 'index'])->name('Real-Time-Reports-Admin');
 
 
 Route::get('/locale/{locale}', function ($locale) {
