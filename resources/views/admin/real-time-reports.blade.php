@@ -5,29 +5,29 @@
 @section('content')
 
 <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2">
-{{-- 
+
+    
+
     <x-lenguage/>
-    <x-modal-realTime/> --}}
-    @foreach ($campaignSettings as $info)
-        {{$info->campaign}}
-    @endforeach
-    {{-- <div
+    <x-modal-realTime/>
+    
+    <div
         class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start">
     </div>
     <div class="p-6 bg-white min-h-screen">
         <div class="flex flex-wrap -mx-3 space-y-4">
             <div></div>
-            <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="0" add="active calls overview"/>
-            <x-button-state2 icon="fa-solid fa-bell" title="Calls ringing" count="0" add="ringing queue" />
-            <x-button-state2 icon="fa-solid fa-clock" title="Calls waiting for agents" count="0" add="awaiting assignment" />
-            <x-button-state2 icon="fa-solid fa-mobile-retro" title="Call in IVR" count="0" add="ivr interactions" />
-            <x-button-state2 icon="fa-solid fa-rotate-left" title="Callback queue calls" count="0" add="pending callbacks" />
-            <x-button-state2 icon="fa-solid fa-users" title="Agents logged in" count="3" add="online agents" />
-            <x-button-state2 icon="fa-solid fa-user-group" title="Agents in calls" count="0" add="engaged agents" />
-            <x-button-state2 icon="fa-solid fa-user-clock" title="Agents waiting" count="3" add="available agents" />
-            <x-button-state2 icon="fa-solid fa-phone" title="Paused agents" count="0" add="on break" />
-            <x-button-state2 icon="fa-solid fa-phone-slash" title="Agents in dead calls" count="0" add="error state" />
-            <x-button-state2 icon="fa-solid fa-user-plus" title="Agents in dispo" count="0" add="wrap-up stage" />
+            <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="{{$stats_icon->current_active_calls}}" add="active calls overview"/>
+            <x-button-state2 icon="fa-solid fa-bell" title="Calls ringing" count="{{ $stats_icon->calls_ringing ?? 0 }}" add="ringing queue" />
+            <x-button-state2 icon="fa-solid fa-clock" title="Calls waiting for agents" count="{{$stats_icon->calls_waiting_for_agents ?? 0}}" add="awaiting assignment" />
+            <x-button-state2 icon="fa-solid fa-mobile-retro" title="Call in IVR" count="{{$stats_icon->calls_in_IVR ?? 0}}" add="ivr interactions" />
+            <x-button-state2 icon="fa-solid fa-rotate-left" title="Callback queue calls" count="NONE" add="pending callbacks" />
+            <x-button-state2 icon="fa-solid fa-users" title="Agents logged in" count="{{$stats_icon->agent_logged_in ?? 0}}" add="online agents" />
+            <x-button-state2 icon="fa-solid fa-user-group" title="Agents in calls" count="{{$stats_icon->agent_incall ?? 0}}" add="engaged agents" />
+            <x-button-state2 icon="fa-solid fa-user-clock" title="Agents waiting" count="{{$stats_icon->current_active_calls}}" add="available agents" />
+            <x-button-state2 icon="fa-solid fa-phone" title="Paused agents" count="{{$stats_icon->agent_paused ?? 0}}" add="on break" />
+            <x-button-state2 icon="fa-solid fa-phone-slash" title="Agents in dead calls" count="NONE" add="error state" />
+            <x-button-state2 icon="fa-solid fa-user-plus" title="Agents in dispo" count="NONE" add="wrap-up stage" />
         </div>
 
         <div class="flex my-6 -mx-3">
@@ -279,29 +279,53 @@
                       </p>
                       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                         <!-- Card 1 -->
-                        <x-text-icon icon="fa-code" title="Dial Level" text="1.385" />
+                        <x-text-icon icon="fa-code" title="Dial Level" text="{{$stats->Dial_LEVEL ?? 0}}" />
                         <!-- Card 2 -->
-                        <x-text-icon icon="fa-mobile-alt" title="Dialable Leads" text="0" />
+                        <x-text-icon icon="fa-mobile-alt" title="Trunk Shor/Fill" text="{{$stats->TRUNK_SHORT ?? 0}} / {{$stats->TRUNK_FILL ?? 0}}" />
                         <!-- Card 3 -->
-                        <x-text-icon icon="fa-cogs" title="Hopper ( min/auuto )" text="1907 / 24" />
+                        <x-text-icon icon="fa-cogs" title="Filter" text="{{$stats->FILTER ?? 0}} " />
                         <!-- Card 4 -->
                         <x-text-icon icon="fa-tachometer-alt" title="Leads In Hopper" text="0" />
                         <!-- Card 5 -->
-                        <x-text-icon icon="fa-users" title="Trunk Short/Fill" text="0/0" />
+                        <x-text-icon icon="fa-users" title="Max level" text="{{$stats->MAX_LEVEL ?? 0}}" />
                         <!-- Card 6 -->
-                        <x-text-icon icon="fa-bug" title="Calls Today" text="0" />
+                        <x-text-icon icon="fa-bug" title="Dropped max" text="{{$stats->DROPPED_MAX ?? 0}}%" />
                         <!-- Card 7 -->
-                        <x-text-icon icon="fa-code" title="Dropped / Andswered" text="0.000 / 0" />
+                        <x-text-icon icon="fa-code" title="Target Diff" text="{{$stats->TARGET_DIFF ?? 0}}" />
                         <!-- Card 8 -->
-                        <x-text-icon icon="fa-mobile-alt" title="Dropped Percent" text="0.000%" />
+                        <x-text-icon icon="fa-mobile-alt" title="Intensity" text="{{$stats->INTENSITY ?? 0}}" />
                         <!-- Card 9 -->
-                        <x-text-icon icon="fa-cogs" title="Filter" text="NONE" />
+                        <x-text-icon icon="fa-cogs" title="Dial Timeout" text="{{$stats->DIAL_TIMEOUT ?? 0}}" />
                         <!-- Card 10 -->
-                        <x-text-icon icon="fa-cogs" title="Avg Agents" text="0.86" />
+                        <x-text-icon icon="fa-cogs" title="Taper Time" text="{{$stats->TAPER_TIME ?? 0}}" />
                         <!-- Card 11 -->
-                        <x-text-icon icon="fa-cogs" title="DL Diff" text="0.86%" />
+                        <x-text-icon icon="fa-cogs" title="local Time" text="{{$stats->LOCAL_TIME ?? 0}}" />
                         <!-- Card 12 -->
-                        <x-text-icon icon="fa-cogs" title="DIFF" text="100.00%" />   
+                        <x-text-icon icon="fa-cogs" title="Avail Only" text="{{$stats->AVAIL_ONLY ?? 0}}" />   
+                        
+                        <x-text-icon icon="fa-cogs" title="Dialable Leads" text="{{$stats->DIALABLE_LEADS ?? 0}}" /> 
+                        
+                        <x-text-icon icon="fa-cogs" title="Calls Today" text="{{$stats->CALLS_TODAY ?? 0}}" />
+                        
+                        <x-text-icon icon="fa-cogs" title="AVG Agents" text="{{$stats->AVG_AGENTS ?? 0}}" />
+                        
+                        <x-text-icon icon="fa-cogs" title="Dial Method" text="{{$stats->DIAL_METHOD ?? 0}}" />
+                        
+                        <x-text-icon icon="fa-cogs" title="Hopper (min/auto)" text="{{$stats->HOPPER ?? 0}} / {{$stats->AUTO_HOPPER ?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="Dropped / Answered" text="{{$stats->DROPPED ?? 0}} / {{$stats->ANSWERED ?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="DL Diff" text="{{$stats->AVG_DIFF_ONEMIN ?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="Statuses" text="{{$stats->STATUSES?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="Leads In Hopper" text="{{$stats->LEADS_IN_HOPPER ?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="Dropped Percent" text="{{$stats->DROPPED_PERCENT ?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="DIFF" text="{{$stats->DIFF ?? 0}}" />
+
+                        <x-text-icon icon="fa-cogs" title="Order" text="{{$stats->ORDER_O ?? 0}}" />
                       </div>
                     </div>
                   </section>
@@ -333,7 +357,7 @@
         
 
         
-    </div> --}}
+    </div>
     <div data-dial-init class="fixed end-6 bottom-6 group">
         <div id="speed-dial-menu-default" class="flex flex-col items-center hidden mb-4 space-y-2">
             {{-- <button type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left"
