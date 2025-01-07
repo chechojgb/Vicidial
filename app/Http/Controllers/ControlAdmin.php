@@ -36,20 +36,20 @@ class ControlAdmin extends Controller
     // Pasar los datos a la vista utilizando compact
     return view('admin.real-time-reports');
    }
-    public function generatePdf()
+    public function generatePdf(Request $request)
     {
+        $stats = $request->input('stats');
+        $stats_icon = $request->input('stats_icon');
+        $tables = $request->input('tables');
         set_time_limit(300);
-
         // Renderizar la vista a HTML
-        $html = view('admin.test')->render();
-
+        $html = view('admin.pdfDowload', compact('stats', 'stats_icon', 'tables'))->render();
         $pdf = Browsershot::html($html)
             ->showBackground()
             ->setNodeBinary('C:\Program Files\nodejs\node.exe') // Ruta correcta de Node.js
             ->setNpmBinary('C:\Program Files\nodejs\npm.cmd') // Ruta correcta de npm
             ->format('A4')
             ->pdf();
-
         return response($pdf)
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="realtime_report.pdf"');

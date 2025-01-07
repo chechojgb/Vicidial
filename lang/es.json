@@ -85,5 +85,7 @@
     "Hold": "Espera",
     "Used to view user groups and their details": "Se utiliza para ver los grupos de usuarios y sus detalles",
     "Used to view real-time reports of calls and agents": "Se utiliza para ver informes en tiempo real de llamadas y agentes",
-    "No data available": "No hay datos disponibles"
+    "No data available": "No hay datos disponibles",
+    "Property": "Propiedad",
+    "Value": "Valor"
 }
