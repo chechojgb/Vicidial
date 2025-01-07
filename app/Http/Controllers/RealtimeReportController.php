@@ -63,8 +63,6 @@ class RealtimeReportController extends Controller
                 DB::raw('GROUP_CONCAT(DISTINCT vc.lead_order SEPARATOR ", ") AS ORDER_O')
             ])
         ->first();
-
-
         $stats_icon = DB::table('vicidial_live_agents')
             ->select([
                 DB::raw('SUM(CASE WHEN status IN ("INCALL", "QUEUE") THEN 1 ELSE 0 END) AS agent_incall'),
@@ -125,36 +123,33 @@ class RealtimeReportController extends Controller
                         ) AS calls_ringing')
             ])
         ->first();
-        
-
         $tables = DB::table('vicidial_users')
             ->join('vicidial_live_agents', 'vicidial_users.user', '=', 'vicidial_live_agents.user')
             ->select([
-                'vicidial_live_agents.extension',
-                'vicidial_users.full_name',
-                'vicidial_users.user_group',
-                'vicidial_live_agents.conf_exten',
-                'vicidial_live_agents.status',
-                'vicidial_live_agents.campaign_id',
-                'vicidial_live_agents.calls_today'
+                'vicidial_live_agents.extension AS ext',
+                'vicidial_users.full_name AS name',
+                'vicidial_users.user_group AS user_group',
+                'vicidial_live_agents.conf_exten AS session_id',
+                'vicidial_live_agents.status AS status',
+                'vicidial_live_agents.campaign_id AS campaign',
+                'vicidial_live_agents.calls_today AS calls_today',
             ])
-        ->first();
-
-
+        ->get();
+        $allCampaigns = DB::table('vicidial_campaigns')
+            ->select(['campaign_id', 'campaign_name'])
+            ->orderBy('campaign_id')
+        ->get();
+        $allUserGroups = DB::table('vicidial_user_groups')
+            ->select(['user_group'])
+            ->orderBy('user_group')
+        ->get();
+        $allSelectInGroups = DB::table('vicidial_inbound_groups')
+            ->select(['group_id', 'group_name'])
+            ->orderBy('group_id')
+        ->get();
         
-
-
-        
-
-
-
-
-
         // dd($stats, $tables, $stats_icon);
-
-        // Más consultas y lógica aquí...
-
-        return view('admin.real-time-reports', compact('stats', 'tables', 'stats_icon'));
+        return view('admin.real-time-reports', compact('stats', 'tables', 'stats_icon', 'allCampaigns', 'allUserGroups', 'allSelectInGroups'));
     }
 
     public function update(Request $request)

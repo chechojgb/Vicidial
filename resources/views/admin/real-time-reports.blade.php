@@ -9,7 +9,7 @@
     
 
     <x-lenguage/>
-    <x-modal-realTime/>
+    <x-modal-realTime :allCampaigns="$allCampaigns" :allUserGroups="$allUserGroups" :allSelectInGroups="$allSelectInGroups"/>
     
     <div
         class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start">
@@ -49,17 +49,11 @@
                         id="dashboard-styled-tab" data-tabs-target="#real-time-reports" type="button" role="tab"
                         aria-controls="dashboard" aria-selected="false">{{__('Real Time Reports')}}</button>
                 </li>
-                <li class="me-2" role="presentation">
-                    <button data-popover-target="popover-show-custphones"
-                        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        id="settings-styled-tab" data-tabs-target="#styled-settings" type="button" role="tab"
-                        aria-controls="settings" aria-selected="false">{{__('Show Custphones')}}</button>
-                </li>
+                
 
               </ul>
-              <x-popover popoverId="popover-view-user-group" title="What is?" description="Se usa para ver los grupos de usuarios y sus detalles."/>
-              <x-popover popoverId="popover-real-time-reports" title="What is?" description="Se usa para ver los reportes en tiempo real de las llamadas y agentes."/>
-              <x-popover popoverId="popover-show-custphones" title="What is?" description="Se usa para mostrar los números de teléfono de los clientes."/>
+              <x-popover popoverId="popover-view-user-group" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+              <x-popover popoverId="popover-real-time-reports" title="What is?" description="{{__('Used to view real-time reports of calls and agents')}}."/>
         </div>
         <div id="default-styled-tab-content">
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="view-user-group" role="tabpanel"
@@ -71,198 +65,80 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    Station
+                                    {{__('Station')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    phone
+                                    {{__('phone')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    User Show Id Info
+                                    {{__('User Show Id Info')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    SessionId
+                                    {{__('User Group')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Status
+                                    {{__('SessionId')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    MM:SS
+                                    {{__('Status')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Campaing
+                                    {{__('MM:SS')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Calls
+                                    {{__('Campaing')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Hold
+                                    {{__('Calls')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    In-Group
+                                    {{__('Hold')}}
                                 </th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Apple MacBook Pro 17"
-                                </th>
-                                <td class="px-6 py-4">
-                                    Silver
-                                </td>
-                                <td class="px-6 py-4">
-                                    Laptop
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $2999
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Microsoft Surface Pro
-                                </th>
-                                <td class="px-6 py-4">
-                                    White
-                                </td>
-                                <td class="px-6 py-4">
-                                    Laptop PC
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                                <td class="px-6 py-4">
-                                    $1999
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Magic Mouse 2
-                                </th>
-                                <td class="px-6 py-4">
-                                    Black
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Google Pixel Phone
-                                </th>
-                                <td class="px-6 py-4">
-                                    Gray
-                                </td>
-                                <td class="px-6 py-4">
-                                    Phone
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                                <td class="px-6 py-4">
-                                    $799
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Magic Mouse 2
-                                </th>
-                                <td class="px-6 py-4">
-                                    Black
-                                </td>
-                                <td class="px-6 py-4">
-                                    Accessories
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                                <td class="px-6 py-4">
-                                    $99
-                                </td>
-                            </tr>
+                            @if ($tables->count() > 0)
+                                @foreach ($tables as $table)
+                                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{$table->ext}}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{$table->ext}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->full_name}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->user_group}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->conf_exten}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->status}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{-- Campo vacío, puedes rellenar si es necesario --}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->campaign_id}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->calls_today}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$table->full_name}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="10" class="px-6 py-4 text-center">{{__('No data available')}}.</td>
+                                </tr>
+                            @endif
+                            
                         </tbody>
                     </table>
                   </div>
@@ -274,9 +150,7 @@
                       <h1 class="text-center text-gray-900 text-sm font-semibold tracking-wide uppercase mb-4">
                         Real Time Reports
                       </h1>
-                      <p class="text-center text-gray-600 text-lg mb-12">
-                        I'm not just a developer; I'm a digital dreamweaver. Crafting immersive online experiences is not just a job but my calling. Discover below how I can help you.
-                      </p>
+                      
                       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                         <!-- Card 1 -->
                         <x-text-icon icon="fa-code" title="Dial Level" text="{{$stats->Dial_LEVEL ?? 0}}" />
@@ -337,20 +211,7 @@
             
             
             
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-settings" role="tabpanel"
-                aria-labelledby="settings-tab">
-                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                        class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>.
-                    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                    classes to control the content visibility and styling.</p>
-            </div>
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-contacts" role="tabpanel"
-                aria-labelledby="contacts-tab">
-                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                        class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>.
-                    Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                    classes to control the content visibility and styling.</p>
-            </div>
+            
         </div>
 
 

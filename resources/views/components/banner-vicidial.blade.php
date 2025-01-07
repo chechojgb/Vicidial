@@ -7,7 +7,7 @@
                 </svg>
                 <span class="sr-only">Light bulb</span>
             </span>
-            <span>New vicidal design, Beta version 1.0 <a href="https://www.vicidial.com" class="inline font-medium text-blue-600 underline dark:text-blue-500 underline-offset-2 decoration-600 dark:decoration-500 decoration-solid hover:no-underline" >Vicidial Library</a></span>
+            <span>New vicidal design, Beta version 0.1.2 <a href="https://www.vicidial.com" class="inline font-medium text-blue-600 underline dark:text-blue-500 underline-offset-2 decoration-600 dark:decoration-500 decoration-solid hover:no-underline" >Vicidial Library</a></span>
         </p>
     </div>
     <div class="flex items-center">

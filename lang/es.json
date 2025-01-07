@@ -72,5 +72,18 @@
     "ALL-GROUPS": "TODOS-LOS-GRUPOS",
     "ADMIN - VICIDIAL ADMINISTRATORS": "ADMIN - ADMINISTRADORES DE VICIDIAL",
     "CLAROCARTERA - CLARO CARTERA": "CLAROCARTERA - CLARO CARTERA",
-    "Pruebas - Pruebas": "Pruebas - Pruebas"
+    "Pruebas - Pruebas": "Pruebas - Pruebas",
+    "Station": "Estación",
+    "phone": "Teléfono",
+    "User Show Id Info": "Mostrar información de ID de usuario",
+    "User Group": "Grupo de usuarios",
+    "SessionId": "ID de sesión",
+    "Status": "Estado",
+    "MM:SS": "MM:SS",
+    "Campaing": "Campaña",
+    "Calls": "Llamadas",
+    "Hold": "Espera",
+    "Used to view user groups and their details": "Se utiliza para ver los grupos de usuarios y sus detalles",
+    "Used to view real-time reports of calls and agents": "Se utiliza para ver informes en tiempo real de llamadas y agentes",
+    "No data available": "No hay datos disponibles"
 }
