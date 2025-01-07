@@ -151,15 +151,4 @@ class RealtimeReportController extends Controller
         // dd($stats, $tables, $stats_icon);
         return view('admin.real-time-reports', compact('stats', 'tables', 'stats_icon', 'allCampaigns', 'allUserGroups', 'allSelectInGroups'));
     }
-
-    public function update(Request $request)
-    {
-        // Lógica para manejar la actualización AJAX
-        $adastats = $request->input('adastats', 1);
-
-        // Consultas y lógica para actualizar el contenido en tiempo real
-        $data = DB::table('vicidial_live_agents')->get();
-
-        return response()->json($data);
-    }
 }
