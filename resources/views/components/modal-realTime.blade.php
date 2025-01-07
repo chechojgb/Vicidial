@@ -18,13 +18,14 @@
           <label for="campaigns" class="block text-sm font-medium text-gray-700 mb-2">{{__('Select Campaigns:')}}</label>
           <select id="campaigns" name="campaigns" multiple class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
             <option>{{__('ALL-ACTIVE')}}</option>
-            <option>{{__('AIR_COB - AIRE_COBRO')}}</option>
-            <option>{{__('CALLBACK - CALLBACK')}}</option>
-            <option>{{__('MANUAL - Marcación Manual')}}</option>
-            <option>{{__('PRU_VBV2 - Prueba VoiceBot V2')}}</option>
-            <option>{{__('PRUEBAS - CAMPAÑA DE PRUEBAS')}}</option>
-            <option>{{__('SOULPHON - SOULPHON')}}</option>
-            <option>{{__('TESOUL1 - Test SoulPhone1')}}</option>
+              @if ($allCampaigns->count() > 0)
+                  @foreach ($allCampaigns as $campaign)
+                      <option>{{$campaign->campaign_id}} - {{$campaign->campaign_name}}</option>
+                  @endforeach
+              @else
+                <option>{{__('No campaigns available')}}.</option>
+                  
+              @endif
           </select>
           <p class="text-sm text-gray-500 mt-2">{{__('Hold down Ctrl to select multiple campaigns.')}}</p>
         </div>
@@ -33,13 +34,15 @@
         <div>
           <label for="user-groups" class="block text-sm font-medium text-gray-700 mb-2">{{__('Select User Groups:')}}</label>
           <select id="user-groups" name="user-groups" multiple class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            <option>{{__('ALL-GROUPS')}}</option>
-            <option>{{__('ADMIN - VICIDIAL ADMINISTRATORS')}}</option>
-            <option>{{__('CLAROCARTERA - CLARO CARTERA')}}</option>
-            <option>{{__('Pruebas - Pruebas')}}</option>
-            <option>{{__('TESTSOUL - TESTSOUL')}}</option>
-            <option>{{__('ThomasGreg - Thomas Greg')}}</option>
-            <option>{{__('VOICEBOT - VOICEBOT VER 1 2')}}</option>
+            <option>{{__('ALL-GROUPS')}} - All user groups</option>
+              @if ($allUserGroups->count() > 0)
+                  @foreach ($allUserGroups as $userGroup)
+                      <option>{{$userGroup->user_group}}</option>
+                  @endforeach
+              @else
+                <option>{{__('No User groups available')}}.</option>
+                  
+              @endif
           </select>
         </div>
 
@@ -48,12 +51,14 @@
           <label for="in-groups" class="block text-sm font-medium text-gray-700 mb-2">{{__('Select In-Groups:')}}</label>
           <select id="in-groups" name="in-groups" multiple class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
             <option>{{__('ALL-INGROUPS')}}</option>
-            <option>{{__('AGENTDIRECT - Single Agent Direct Queue')}}</option>
-            <option>{{__('AGENTDIRECT_CHAT - Agent Direct Queue for Chats')}}</option>
-            <option>{{__('DEMOTG - DEMO THOMAS GREG')}}</option>
-            <option>{{__('MTD_OP1 - Montechelo Dummy Option 1')}}</option>
-            <option>{{__('MTD_OP2 - Montechelo Dummy Option 2')}}</option>
-            <option>{{__('PRUEBA - PRUEBA AUDIO FORK')}}</option>
+            @if ($allSelectInGroups->count() > 0)
+                @foreach ($allSelectInGroups as $inGroup)
+                    <option>{{$inGroup->group_id}} - {{$inGroup->group_name}}</option>
+                @endforeach
+            @else
+              <option>{{__('No User groups available')}}.</option>
+                
+            @endif
           </select>
         </div>
       </div>
