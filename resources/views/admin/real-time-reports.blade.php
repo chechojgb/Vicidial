@@ -43,16 +43,16 @@
             <ul class="flex flex-wrap -mb-px text-sm  text-center" id="default-styled-tab"
                 data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-black hover:text-purple-600 dark:text-purple-500 dark:hover:text-blue-500 border-soul-1 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
                 <li class="me-2" role="presentation">
-                    <button data-popover-target="popover-real-time-reports"
-                        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        id="dashboard-styled-tab" data-tabs-target="#real-time-reports" type="button" role="tab"
-                        aria-controls="dashboard" aria-selected="false">{{__('Real Time Reports')}}</button>
-                </li>
-                <li class="me-2" role="presentation">
                     <button data-popover-target="popover-view-user-group" class="inline-block p-4 border-b-2 rounded-t-lg"
                         id="profile-styled-tab" data-tabs-target="#view-user-group" type="button" role="tab"
                         aria-controls="profile" aria-selected="false">{{__('View User Groups')}}</button>
                         
+                </li>
+                <li class="me-2" role="presentation">
+                    <button data-popover-target="popover-real-time-reports"
+                        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                        id="dashboard-styled-tab" data-tabs-target="#real-time-reports" type="button" role="tab"
+                        aria-controls="dashboard" aria-selected="false">{{__('Real Time Reports')}}</button>
                 </li>
                 
 
@@ -66,10 +66,10 @@
                 
 
                   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 sm:rounded-lg border-collapse border-spacing-0">
+                        <thead class="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 bg-soul-1 border-none sm:rounded-lg">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-3 border-none">
                                     {{__('Station')}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -113,13 +113,13 @@
                                             {{$table->ext}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$table->full_name}}
+                                            {{ $table->name ?? 'Nombre no disponible' }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$table->user_group}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$table->conf_exten}}
+                                            {{$table->conf_exten ?? 'No disponible'}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$table->status}}
@@ -128,13 +128,13 @@
                                             {{-- Campo vacío, puedes rellenar si es necesario --}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$table->campaign_id}}
+                                            {{$table->campaign_id ?? 'No disponible campaign'}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$table->calls_today}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$table->full_name}}
+                                            {{$table->full_name ?? 'Dato  no disponible'}}
                                         </td>
                                     </tr>
                                 @endforeach

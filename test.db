@@ -237,3 +237,5 @@ SELECT AVG(vcs.agents_average_onemin) AS AVG_AGENTS FROM vicidial_campaign_stats
 
 
 
+
+
