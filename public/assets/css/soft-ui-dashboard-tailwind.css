@@ -642,9 +642,7 @@ svg {
   display: inline;
 }
 
-table {
-  border-collapse: inherit;
-}
+
 
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: .5rem;
@@ -4123,7 +4121,7 @@ h6 {
 
 
 .bg-soul-1 {
-  background-color: #51B0CB;
+  background-color: #00acc1;
 }
 .border-soul-1 {
   border-color: #51B0CB;
