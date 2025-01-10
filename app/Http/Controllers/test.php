@@ -25,18 +25,15 @@ class RealtimeReportController extends Controller
         $allCampaigns = $this->getAllCampaigns();
         $allUserGroups = $this->getAllUserGroups();
         $allSelectInGroups = $this->getInboundGroups();
-        
-        
-        
+    
         // 5. Retorno de la vista
         return view('admin.real-time-reports', compact(
             'stats', 'tables', 'statsIcon', 'allCampaigns', 'allUserGroups', 'allSelectInGroups', 'refreshRate'
         ));
-
     }
     
-   
-    #Prueba de funcion de refresco, sin confirmar
+    // Métodos auxiliares
+    
     private function getRefreshRate(Request $request)
     {
         $refreshRate = session('refresh_rate', config('app.refresh_rate'));
@@ -185,10 +182,10 @@ class RealtimeReportController extends Controller
                 'vicidial_live_agents.last_call_finish AS last_call_finish',
             ])
             ->addSelect(DB::raw("TIMESTAMPDIFF(MINUTE, vicidial_live_agents.last_call_finish, NOW()) AS minutes_since_last_call"));
-        if (!in_array('ALL-ACTIVE', $campaignIds, true) && !empty($campaignIds)) {
+        if (!empty($campaignIds)) {
             $tables->whereIn('campaign_id', $campaignIds);
         }
-        // dd($tables->toSql());
+    
         return $tables->get();
     }
     
@@ -218,12 +215,10 @@ class RealtimeReportController extends Controller
     
     private function buildCampaignCondition(array $campaignIds)
     {
-        if (in_array('ALL-ACTIVE', $campaignIds, true)) {
-            return '';
-        }
         if (empty($campaignIds)) {
             return '';
         }
+    
         $escapedIds = array_map(function ($id) {
             return "'" . addslashes($id) . "'";
         }, $campaignIds);
