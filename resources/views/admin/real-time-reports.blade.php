@@ -10,9 +10,9 @@
     
 
       
-
+    {{-- <p>Screen Refresh Rate: <span id="refreshRateDisplay">{{ $refreshRate }}</span> seconds</p> --}}
     <x-lenguage/>
-    <x-modal-realTime :allCampaigns="$allCampaigns" :allUserGroups="$allUserGroups" :allSelectInGroups="$allSelectInGroups"/>
+    <x-modal-realTime :allCampaigns="$allCampaigns" :allUserGroups="$allUserGroups" :allSelectInGroups="$allSelectInGroups" :refreshRate="$refreshRate"/>
     
     
       
@@ -29,15 +29,34 @@
             <x-button-state2 icon="fa-solid fa-rotate-left" title="Callback queue calls" count="NONE" add="pending callbacks" />
             <x-button-state2 icon="fa-solid fa-users" title="Agents logged in" count="{{$stats_icon->agent_logged_in ?? 0}}" add="online agents" />
             <x-button-state2 icon="fa-solid fa-user-group" title="Agents in calls" count="{{$stats_icon->agent_incall ?? 0}}" add="engaged agents" />
-            <x-button-state2 icon="fa-solid fa-user-clock" title="Agents waiting" count="{{$stats_icon->current_active_calls}}" add="available agents" />
+            <x-button-state2 icon="fa-solid fa-user-clock" title="Agents waiting" count="{{$stats_icon->agents_waiting}}" add="available agents" />
             <x-button-state2 icon="fa-solid fa-phone" title="Paused agents" count="{{$stats_icon->agent_paused ?? 0}}" add="on break" />
             <x-button-state2 icon="fa-solid fa-phone-slash" title="Agents in dead calls" count="NONE" add="error state" />
             <x-button-state2 icon="fa-solid fa-user-plus" title="Agents in dispo" count="NONE" add="wrap-up stage" />
         </div>
 
-        <div class="flex my-6 -mx-3">
+        <div class="flex justify-center my-6 -mx-3">
+            <span class="flex w-3 h-3 me-3 bg-gray-200 rounded-full cursor-pointer" data-popover-target="popover-user-spawn"></span>
+            <x-popover popoverId="popover-user-spawn" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-gray-900 rounded-full dark:bg-gray-700 cursor-pointer" data-popover-target="popover-user-dead"></span>
+            <x-popover popoverId="popover-user-dead" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-blue-600 rounded-full cursor-pointer" data-popover-target="popover-user-blue"></span>
+            <x-popover popoverId="popover-user-blue" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-green-500 rounded-full cursor-pointer" data-popover-target="popover-user-green"></span>
+            <x-popover popoverId="popover-user-green" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-red-500 rounded-full cursor-pointer" data-popover-target="popover-user-red"></span>
+            <x-popover popoverId="popover-user-red" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-purple-500 rounded-full cursor-pointer" data-popover-target="popover-user-purple"></span>
+            <x-popover popoverId="popover-user-purple" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-indigo-500 rounded-full cursor-pointer" data-popover-target="popover-user-purple_v2"></span>
+            <x-popover popoverId="popover-user-purple_v2" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-yellow-300 rounded-full cursor-pointer" data-popover-target="popover-user-yellow"></span>
+            <x-popover popoverId="popover-user-yellow" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+            <span class="flex w-3 h-3 me-3 bg-teal-500 rounded-full cursor-pointer" data-popover-target="popover-user-green_v2"></span>
+            <x-popover popoverId="popover-user-green_v2" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
         </div>
 
+        
 
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm  text-center" id="default-styled-tab"
@@ -119,7 +138,7 @@
                                             {{$table->user_group}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$table->conf_exten ?? 'No disponible'}}
+                                            {{$table->session_id ?? 'No disponible'}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$table->status}}
@@ -302,6 +321,9 @@
     
     <div class="">
     </div>
+
+
+    
     
 </main>
 

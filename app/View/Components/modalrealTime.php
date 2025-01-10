@@ -11,14 +11,16 @@ class modalrealTime extends Component
     public $allCampaigns;
     public $allUserGroups;
     public $allSelectInGroups;
+    public $refreshRate;
     /**
      * Create a new component instance.
      */
-    public function __construct($allCampaigns, $allUserGroups, $allSelectInGroups)
+    public function __construct($allCampaigns, $allUserGroups, $allSelectInGroups, $refreshRate)
     {
         $this->allCampaigns = $allCampaigns;
         $this->allUserGroups = $allUserGroups;
         $this->allSelectInGroups = $allSelectInGroups;
+        $this->refreshRate = $refreshRate;
     }
 
     /**

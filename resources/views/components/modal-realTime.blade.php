@@ -8,6 +8,7 @@
 <!-- Main modal -->
 <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative p-4 w-full max-w-4xl max-h-full">
+    
     <!-- Modal content -->
     <div class="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
       <div class="flex justify-between items-center mb-6">
@@ -46,7 +47,7 @@
               <option>{{__('ALL-GROUPS')}} - All user groups</option>
                 @if ($allUserGroups->count() > 0)
                     @foreach ($allUserGroups as $userGroup)
-                        <option>{{$userGroup->user_group}}</option>
+                        <option>{{$userGroup->user_group}} - {{$userGroup->group_name}}</option>
                     @endforeach
                 @else
                   <option>{{__('No User groups available')}}.</option>
@@ -72,19 +73,20 @@
           </div>
         </div>
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            
   
-          <x-select-dropdown title="Screen Refresh Rate" :options="['option1' => '4 seconds', 'option2' => '10 seconds', 'option3' => '20 seconds', 'option4' => '30 seconds', 'option5' => '40 seconds','option6' => '60 seconds', 'option7' => '2 minutes', 'option8' => '5 minutes', 'option9' => '10 minutes', 'option10' => '20 minutes', 'option11' => '30 minutes', 'option12' => '40 minutes', 'option13' => '60 minutes', 'option14' => '2 hours', 'option15' => '2 years']" />
-          <x-select-dropdown title="Inbound" :options="['option1' => 'Yes']" />
-          <x-select-dropdown title="Monitor" :options="['option1' => 'No']" />
-          <x-select-dropdown title="Show Drop In-Group Row" :options="['option1' => 'No']" />
-          <x-select-dropdown title="Inbound SLA Stats" :options="['option1' => 'No', 'option2' => 'YES', 'option3' => 'TMA', 'option4' => 'SLA 1 ONLY', 'option5' => 'SLA 2 ONLY']" />
-          <x-select-dropdown title="Show Cust. Phone Code" :options="['option1' => 'No']" />
-          <x-select-dropdown title="Show Carrier Stats" :options="['option1' => 'No']" />
-          <x-select-dropdown title="Agent Time Stats" :options="['option1' => 'No']" />
-          <x-select-dropdown title="Agent Latency" :options="['option1' => 'No', 'option2' => 'YES', 'option3' => 'ALL', 'option4' => 'DAY', 'option5' => 'NOW']" />
-          <x-select-dropdown title="Parked Call Stats" :options="['option1' => 'No', 'option2' => 'YES', 'option3' => 'LIMITED']" />
-          <x-select-dropdown title="In-group color override" :options="['option1' => 'No']" />
-          <x-select-dropdown title="Display as" :options="['option1' => 'No']" />
+          <x-select-dropdown title="Screen Refresh Rate" :options="['4' => '4 seconds', '10' => '10 seconds', '20' => '20 seconds', '30' => '30 seconds', '40' => '40 seconds', '60' => '60 seconds', '120' => '2 minutes', '300' => '5 minutes', '600' => '10 minutes', '1200' => '20 minutes', '1800' => '30 minutes', '2400' => '40 minutes', '3600' => '60 minutes', '7200' => '2 hours', '63072000' => '2 years']" :selectedValue="$refreshRate" name='refreshRate'/>
+            <x-select-dropdown title="Inbound" :options="['Yes' => 'Yes']" name='inbound' />
+            <x-select-dropdown title="Monitor" name='monitor' :options="['option1' => 'No']" />
+            <x-select-dropdown title="Show Drop In-Group Row" name='show_drop_in_group_row' :options="['option1' => 'No']" />
+            <x-select-dropdown title="Inbound SLA Stats" name='inbound_sla_stats' :options="['option1' => 'No', 'option2' => 'YES', 'option3' => 'TMA', 'option4' => 'SLA 1 ONLY', 'option5' => 'SLA 2 ONLY']" />
+            <x-select-dropdown title="Show Cust. Phone Code" name='show_cust_phone_code' :options="['option1' => 'No']" />
+            <x-select-dropdown title="Show Carrier Stats" name='show_carrier_stats' :options="['option1' => 'No']" />
+            <x-select-dropdown title="Agent Time Stats" name='agent_time_stats' :options="['option1' => 'No']" />
+            <x-select-dropdown title="Agent Latency" name='agent_latency' :options="['option1' => 'No', 'option2' => 'YES', 'option3' => 'ALL', 'option4' => 'DAY', 'option5' => 'NOW']" />
+            <x-select-dropdown title="Parked Call Stats" name='parked_call_stats' :options="['option1' => 'No', 'option2' => 'YES', 'option3' => 'LIMITED']" />
+            <x-select-dropdown title="In-group color override" name='in_group_color_override' :options="['option1' => 'No']" />
+            <x-select-dropdown title="Display as" name='display_as' :options="['option1' => 'No']" />
   
         </div>
   

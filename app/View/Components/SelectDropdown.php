@@ -10,13 +10,18 @@ class SelectDropdown extends Component
 {
     public $title;
     public $options;
+    public $selectedValue;
+    
+
     /**
      * Create a new component instance.
      */
-    public function __construct($title, $options)
+    public function __construct($title, $options, $selectedValue = null )
     {
         $this->title = $title;
         $this->options = $options;
+        $this->selectedValue = $selectedValue;
+   
     }
     
     /**
