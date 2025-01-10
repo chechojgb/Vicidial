@@ -27,11 +27,12 @@
             <select id="campaigns" name="campaign_ids[]" multiple class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
               <option>{{__('ALL-ACTIVE')}}</option>
                 @if ($allCampaigns->count() > 0)
-                    @foreach ($allCampaigns as $campaign)
-                        <option value="{{$campaign->campaign_id}}">
-                          {{ in_array($campaign->campaign_id, request('campaign_ids', [])) ? 'selected' : ''}}
-                          {{$campaign->campaign_id}} - {{$campaign->campaign_name}}</option>
-                    @endforeach
+                  @foreach ($allCampaigns as $campaign)
+                      <option value="{{$campaign->campaign_id}}"
+                          {{ in_array($campaign->campaign_id, request('campaign_ids', [])) ? 'selected' : '' }}>
+                          {{$campaign->campaign_id}} - {{$campaign->campaign_name}}
+                      </option>
+                  @endforeach
                 @else
                   <option>{{__('No campaigns available')}}.</option>
                     

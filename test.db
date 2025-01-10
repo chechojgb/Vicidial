@@ -246,3 +246,5 @@ WHERE status IN ('READY', 'CLOSER')
 
 SELECT * AS agents_logged_in
 FROM vicidial_live_agents
+
+DB::raw('COUNT(DISTINCT CASE WHEN status = "READY" THEN campaign_id END) AS agent_logged_in')

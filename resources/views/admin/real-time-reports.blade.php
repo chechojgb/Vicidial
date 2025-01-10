@@ -22,15 +22,15 @@
     <div class="p-6 bg-white min-h-screen">
         <div class="flex flex-wrap -mx-3 space-y-4">
             <div></div>
-            <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="{{$stats_icon->current_active_calls}}" add="active calls overview"/>
-            <x-button-state2 icon="fa-solid fa-bell" title="Calls ringing" count="{{ $stats_icon->calls_ringing ?? 0 }}" add="ringing queue" />
-            <x-button-state2 icon="fa-solid fa-clock" title="Calls waiting for agents" count="{{$stats_icon->calls_waiting_for_agents ?? 0}}" add="awaiting assignment" />
-            <x-button-state2 icon="fa-solid fa-mobile-retro" title="Call in IVR" count="{{$stats_icon->calls_in_IVR ?? 0}}" add="ivr interactions" />
+            <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="{{$statsIcon->current_active_calls}}" add="active calls overview"/>
+            <x-button-state2 icon="fa-solid fa-bell" title="Calls ringing" count="{{ $statsIcon->calls_ringing ?? 0 }}" add="ringing queue" />
+            <x-button-state2 icon="fa-solid fa-clock" title="Calls waiting for agents" count="{{$statsIcon->calls_waiting_for_agents ?? 0}}" add="awaiting assignment" />
+            <x-button-state2 icon="fa-solid fa-mobile-retro" title="Call in IVR" count="{{$statsIcon->calls_in_IVR ?? 0}}" add="ivr interactions" />
             <x-button-state2 icon="fa-solid fa-rotate-left" title="Callback queue calls" count="NONE" add="pending callbacks" />
-            <x-button-state2 icon="fa-solid fa-users" title="Agents logged in" count="{{$stats_icon->agent_logged_in ?? 0}}" add="online agents" />
-            <x-button-state2 icon="fa-solid fa-user-group" title="Agents in calls" count="{{$stats_icon->agent_incall ?? 0}}" add="engaged agents" />
-            <x-button-state2 icon="fa-solid fa-user-clock" title="Agents waiting" count="{{$stats_icon->agents_waiting}}" add="available agents" />
-            <x-button-state2 icon="fa-solid fa-phone" title="Paused agents" count="{{$stats_icon->agent_paused ?? 0}}" add="on break" />
+            <x-button-state2 icon="fa-solid fa-users" title="Agents logged in" count="{{$statsIcon->agent_logged_in ?? 0}}" add="online agents" />
+            <x-button-state2 icon="fa-solid fa-user-group" title="Agents in calls" count="{{$statsIcon->agent_incall ?? 0}}" add="engaged agents" />
+            <x-button-state2 icon="fa-solid fa-user-clock" title="Agents waiting" count="{{$statsIcon->agents_waiting}}" add="available agents" />
+            <x-button-state2 icon="fa-solid fa-phone" title="Paused agents" count="{{$statsIcon->agent_paused ?? 0}}" add="on break" />
             <x-button-state2 icon="fa-solid fa-phone-slash" title="Agents in dead calls" count="NONE" add="error state" />
             <x-button-state2 icon="fa-solid fa-user-plus" title="Agents in dispo" count="NONE" add="wrap-up stage" />
         </div>
@@ -144,7 +144,7 @@
                                             {{$table->status}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{-- Campo vacío, puedes rellenar si es necesario --}}
+                                            {{$table->minutes_since_last_call ?? 'No disponible'}}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{$table->campaign_id ?? 'No disponible campaign'}}
@@ -275,7 +275,7 @@
                 Print
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div> --}}
-            <a href="{{route('generate-pdf', ['stats' => $stats, 'stats_icon' => $stats_icon, 'tables' => $tables])}}" type="button" data-tooltip-target="tooltip-download" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
+            <a href="{{route('generate-pdf', ['stats' => $stats, 'statsIcon' => $statsIcon, 'tables' => $tables])}}" type="button" data-tooltip-target="tooltip-download" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     viewBox="0 0 20 20">
                     <path
