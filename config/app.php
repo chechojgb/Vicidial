@@ -200,4 +200,18 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Refresh Rate
+    |--------------------------------------------------------------------------
+    |
+    | This value determines how often the information on a view is refreshed.
+    | The framework uses this value to set the refresh rate for the application.
+    |
+    */
+
+    'refresh_rate' => env('REFRESH_RATE', 10),
+
+    'available_refresh_rates' => ['4', '10', '20', '30', '60', '120', '300'],
+
 ];

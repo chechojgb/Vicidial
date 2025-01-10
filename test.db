@@ -239,3 +239,10 @@ SELECT AVG(vcs.agents_average_onemin) AS AVG_AGENTS FROM vicidial_campaign_stats
 
 
 
+SELECT extension, user, conf_exten, status, server_ip, UNIX_TIMESTAMP(last_call_time) AS last_call_time, UNIX_TIMESTAMP(last_call_finish) AS last_call_finish, call_server_ip, campaign_id
+FROM vicidial_live_agents
+WHERE status IN ('READY', 'CLOSER')
+
+
+SELECT * AS agents_logged_in
+FROM vicidial_live_agents
