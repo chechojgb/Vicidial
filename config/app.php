@@ -212,6 +212,6 @@ return [
 
     'refresh_rate' => env('REFRESH_RATE', 10),
 
-    'available_refresh_rates' => ['4', '10', '20', '30', '60', '120', '300'],
+    'available_refresh_rates' => ['4', '10', '20', '30', '60', '120', '300', '600', '1200', '1800', '2400', '3600'],
 
 ];

@@ -10,39 +10,43 @@ class RealtimeReportController extends Controller
 {
     public function index(Request $request)
     {
-        // 1. Configuración de parámetros iniciales
         $refreshRate = $this->getRefreshRate($request);
         $campaignIds = $request->input('campaign_ids', []);
-    
-        // 2. Generación de estadísticas generales
         $stats = $this->getGeneralStats($campaignIds);
-    
-        // 3. Obtención de estadísticas específicas de agentes
         $statsIcon = $this->getAgentStats($campaignIds);
-    
-        // 4. Carga de información adicional
         $tables = $this->getActiveUsers($campaignIds);
         $allCampaigns = $this->getAllCampaigns();
         $allUserGroups = $this->getAllUserGroups();
         $allSelectInGroups = $this->getInboundGroups();
         
-        
-        
-        // 5. Retorno de la vista
         return view('admin.real-time-reports', compact(
             'stats', 'tables', 'statsIcon', 'allCampaigns', 'allUserGroups', 'allSelectInGroups', 'refreshRate'
         ));
 
     }
     
+    public function refreshTable(Request $request)
+    {
+        $campaignIds = $request->input('campaign_ids', []);
+        $tables = $this->getActiveUsers($campaignIds);
+
+        return view('admin.partials.table', compact('tables'));
+    }
+
+    public function refreshIcon(Request $request)
+    {
+        $campaignIds = $request->input('campaign_ids', []);
+        $statsIcon = $this->getAgentStats($campaignIds);
+
+        return view('admin.partials.icon', compact('statsIcon'));
+    }
    
     #Prueba de funcion de refresco, sin confirmar
     private function getRefreshRate(Request $request)
     {
-        $refreshRate = session('refresh_rate', config('app.refresh_rate'));
+        $refreshRate = session('refresh_rate', config('app.refresh_rate') * 1000);
         $newRefresh = $request->input('refreshRate');
         $availableRates = config('app.available_refresh_rates');
-    
         if (isset($newRefresh) && in_array($newRefresh, $availableRates)) {
             session()->put('refresh_rate', $newRefresh);
             $refreshRate = $newRefresh;
@@ -54,7 +58,6 @@ class RealtimeReportController extends Controller
     private function getGeneralStats(array $campaignIds)
     {
         $campaignCondition = $this->buildCampaignCondition($campaignIds);
-    
         $localTrunkShortage = '(SELECT SUM(vcss.local_trunk_shortage) FROM vicidial_campaign_server_stats vcss ' . $campaignCondition . ')';
         $dialableLeads = '(SELECT SUM(vcs.dialable_leads) FROM vicidial_campaign_stats vcs ' . $campaignCondition . ')';
         $callsToday = '(SELECT SUM(vcs.calls_today) FROM vicidial_campaign_stats vcs ' . $campaignCondition . ' )';
@@ -230,6 +233,7 @@ class RealtimeReportController extends Controller
     
         return 'WHERE campaign_id IN (' . implode(',', $escapedIds) . ')';
     }
+   
 
    
 }
