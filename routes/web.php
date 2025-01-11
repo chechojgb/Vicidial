@@ -40,7 +40,8 @@ Route::get('/admin/filter/{route}', [ControlAdmin::class, 'index'])->name('Filte
 Route::get('/admin/remote-agents/{route}', [ControlAdmin::class, 'index'])->name('Remote-Agents-Admin');
 
 Route::get('real/time/reports/admin', [RealtimeReportController::class, 'index'])->name('Real-Time-Reports-Admin');
-
+Route::get('/real-time-table-refresh', [RealtimeReportController::class, 'refreshTable'])->name('real-time-table-refresh');
+Route::get('/real-time-icon-refresh', [RealtimeReportController::class, 'refreshIcon'])->name('real-time-Icon-refresh');
 
 Route::get('/locale/{locale}', function ($locale) {
     $available_locales = config('app.available_locales');

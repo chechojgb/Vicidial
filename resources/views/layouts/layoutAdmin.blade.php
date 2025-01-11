@@ -37,7 +37,7 @@
         @livewireStyles
 
     </head>
-<body>
+<body id="reload">
 
     
     <x-banner-vicidial/>
@@ -50,5 +50,7 @@
     @livewireScripts
     @vite('resources/js/app.js')
 </body>
+
+
 
 </html>

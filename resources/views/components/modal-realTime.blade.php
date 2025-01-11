@@ -48,7 +48,9 @@
               <option>{{__('ALL-GROUPS')}} - All user groups</option>
                 @if ($allUserGroups->count() > 0)
                     @foreach ($allUserGroups as $userGroup)
-                        <option>{{$userGroup->user_group}} - {{$userGroup->group_name}}</option>
+                        <option value="{{$userGroup->user_group}}"
+                          
+                          >{{$userGroup->user_group}} - {{$userGroup->group_name}}</option>
                     @endforeach
                 @else
                   <option>{{__('No User groups available')}}.</option>
@@ -64,7 +66,7 @@
               <option>{{__('ALL-INGROUPS')}}</option>
               @if ($allSelectInGroups->count() > 0)
                   @foreach ($allSelectInGroups as $inGroup)
-                      <option>{{$inGroup->group_id}} - {{$inGroup->group_name}}</option>
+                      <option value="">{{$inGroup->group_id}} - {{$inGroup->group_name}}</option>
                   @endforeach
               @else
                 <option>{{__('No User groups available')}}.</option>

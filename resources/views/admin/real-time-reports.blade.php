@@ -4,7 +4,7 @@
 
 @section('content')
 
-<main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2">
+<main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2" >
 
     
     
@@ -20,7 +20,7 @@
         class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start">
     </div>
     <div class="p-6 bg-white min-h-screen">
-        <div class="flex flex-wrap -mx-3 space-y-4">
+        <div class="flex flex-wrap -mx-3 space-y-4" id="stats-container">
             <div></div>
             <x-button-state2 icon="fa-solid fa-phone" title="Current active calls" count="{{$statsIcon->current_active_calls}}" add="active calls overview"/>
             <x-button-state2 icon="fa-solid fa-bell" title="Calls ringing" count="{{ $statsIcon->calls_ringing ?? 0 }}" add="ringing queue" />
@@ -121,7 +121,7 @@
                                 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             @if ($tables->count() > 0)
                                 @foreach ($tables as $table)
                                     <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -144,8 +144,8 @@
                                             {{$table->status}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{$table->minutes_since_last_call ?? 'No disponible'}}
-                                        </td>
+                                            {{$table->minutes_since_last_call ?? 'No disponible'}} Minutos
+                                        </td> 
                                         <td class="px-6 py-4">
                                             {{$table->campaign_id ?? 'No disponible campaign'}}
                                         </td>
@@ -327,6 +327,55 @@
     
 </main>
 
+
+<script>
+    const REFRESH_RATE = {{ $refreshRate }};
+    console.log(REFRESH_RATE);
+    
+    let secondsPassed = 0;
+    setInterval(() => {
+        secondsPassed++;
+        console.log(`Seconds passed: ${secondsPassed}`);
+    }, 1000);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        async function loadTableContent() {
+            try {
+                const response = await fetch('/real-time-table-refresh');
+                if (!response.ok) throw new Error('Error al cargar la tabla');
+                if (response.ok) {
+                    console.log('Tabla actualizada');
+                }
+                const tableContent = await response.text(); // Obtén el HTML como texto
+                document.querySelector('table tbody').innerHTML = tableContent; // Reemplaza el contenido del tbody
+            } catch (error) {
+                console.error('Error al actualizar la tabla:', error);
+            }
+        }
+
+        async function loadIcons() {
+            try {
+                const response = await fetch('/real-time-icon-refresh');
+                if (!response.ok) throw new Error('Error al cargar los iconos');
+                if (response.ok) {
+                    console.log('Iconos actualizados');
+                }
+                const iconContent = await response.text(); // Obtén el HTML como texto
+                document.querySelector('#stats-container').innerHTML = iconContent;
+            } catch (error) {
+                console.error('Error al actualizar los iconos:', error);
+            }
+        }
+
+        // Esta función llama a ambas funciones en el mismo intervalo
+        function loadContent() {
+            loadTableContent();
+            loadIcons();
+        }
+
+        setInterval(loadContent, REFRESH_RATE * 1000); // Ejecutar cada REFRESH_RATE segundos
+    });
+</script>
 
 
 @endsection
