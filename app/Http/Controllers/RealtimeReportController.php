@@ -10,11 +10,17 @@ class RealtimeReportController extends Controller
 {
     public function index(Request $request)
     {
+        session([
+            'campaign_ids' => $request->input('campaign_ids', []),
+            'user_groups' => $request->input('user_groups', []),
+        ]);
+
         $refreshRate = $this->getRefreshRate($request);
-        $campaignIds = $request->input('campaign_ids', []);
+        $campaignIds = session('campaign_ids', []);
+        $userGroups = session('user_groups', []);
         $stats = $this->getGeneralStats($campaignIds);
-        $statsIcon = $this->getAgentStats($campaignIds);
-        $tables = $this->getActiveUsers($campaignIds);
+        $statsIcon = $this->getAgentStats($campaignIds, $userGroups);
+        $tables = $this->getActiveUsers($campaignIds, $userGroups);
         $allCampaigns = $this->getAllCampaigns();
         $allUserGroups = $this->getAllUserGroups();
         $allSelectInGroups = $this->getInboundGroups();
@@ -27,16 +33,18 @@ class RealtimeReportController extends Controller
     
     public function refreshTable(Request $request)
     {
-        $campaignIds = $request->input('campaign_ids', []);
-        $tables = $this->getActiveUsers($campaignIds);
-
-        return view('admin.partials.table', compact('tables'));
+        $campaignIds = session('campaign_ids', []);
+        $userGroups = session('user_groups', []);
+        $tables = $this->getActiveUsers($campaignIds, $userGroups);
+        
+        return view('admin.partials.table', compact('tables' ,'campaignIds'));
     }
 
     public function refreshIcon(Request $request)
     {
-        $campaignIds = $request->input('campaign_ids', []);
-        $statsIcon = $this->getAgentStats($campaignIds);
+        $campaignIds = session('campaign_ids', []);
+        $userGroups = session('user_groups', []);
+        $statsIcon = $this->getAgentStats($campaignIds, $userGroups);
 
         return view('admin.partials.icon', compact('statsIcon'));
     }
@@ -107,7 +115,7 @@ class RealtimeReportController extends Controller
         return $stats->first();
     }
     
-    private function getAgentStats(array $campaignIds)
+    private function getAgentStats(array $campaignIds, $userGroups)
     {
         $statsIcon = DB::table('vicidial_live_agents')
             ->select([
@@ -165,22 +173,33 @@ class RealtimeReportController extends Controller
                             )
                         ) AS calls_ringing')
             ]);
-        if (!empty($campaignIds)) {
+        if (is_array($campaignIds) && !in_array('ALL-ACTIVE', $campaignIds, true) && !empty($campaignIds)) {
             $statsIcon->whereIn('campaign_id', $campaignIds);
-            // dd($stats_icon->toSql());
         }
+        if (is_array($userGroups) && !in_array('ALL-GROUPS', $userGroups, true) && !empty($userGroups)) {
+            $groupUser = function ($query) use ($userGroups) {
+                $query->select('user')
+                    ->from('vicidial_users')
+                    ->whereIn('user_group', $userGroups);
+            };
+            // dd($groupUser);
+            $statsIcon->whereIn('user', $groupUser);
+        }
+
     
         return $statsIcon->first();
     }
     
-    private function getActiveUsers(array $campaignIds)
+    private function getActiveUsers(array $campaignIds, $userGroups)
     {
         $tables = DB::table('vicidial_users')
             ->join('vicidial_live_agents', 'vicidial_users.user', '=', 'vicidial_live_agents.user')
+            // ->join('vicidial_user_groups', 'vicidial_users.user_group', '=', 'vicidial_user_groups.user_group')
             ->select([
                 'vicidial_live_agents.extension AS ext',
                 'vicidial_users.full_name AS name',
                 'vicidial_users.user_group AS user_group',
+                // 'vicidial_user_groups.user_group AS group_name',
                 'vicidial_live_agents.conf_exten AS session_id',
                 'vicidial_live_agents.status AS status',
                 'vicidial_live_agents.campaign_id AS campaign_id',
@@ -188,8 +207,13 @@ class RealtimeReportController extends Controller
                 'vicidial_live_agents.last_call_finish AS last_call_finish',
             ])
             ->addSelect(DB::raw("TIMESTAMPDIFF(MINUTE, vicidial_live_agents.last_call_finish, NOW()) AS minutes_since_last_call"));
-        if (!in_array('ALL-ACTIVE', $campaignIds, true) && !empty($campaignIds)) {
-            $tables->whereIn('campaign_id', $campaignIds);
+        if (is_array($campaignIds) && !in_array('ALL-ACTIVE', $campaignIds, true) && !empty($campaignIds)) {
+            $tables->whereIn('vicidial_live_agents.campaign_id', $campaignIds);
+        }
+        
+        if (is_array($userGroups) && !in_array('ALL-GROUPS', $userGroups, true) && !empty($userGroups)) {
+            $tables->join('vicidial_user_groups', 'vicidial_users.user_group', '=', 'vicidial_user_groups.user_group') // Agregar el JOIN dinámicamente
+            ->whereIn('vicidial_user_groups.user_group', $userGroups);
         }
         // dd($tables->toSql());
         return $tables->get();

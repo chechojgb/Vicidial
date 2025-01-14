@@ -248,3 +248,104 @@ SELECT * AS agents_logged_in
 FROM vicidial_live_agents
 
 DB::raw('COUNT(DISTINCT CASE WHEN status = "READY" THEN campaign_id END) AS agent_logged_in')
+
+
+
+SELECT 
+    vicidial_live_agents.extension AS ext,
+    vicidial_users.full_name AS name,
+    vicidial_users.user_group AS user_group,
+    vicidial_user_groups.user_group AS group_name, -- Nombre del grupo desde vicidial_user_groups
+    vicidial_live_agents.conf_exten AS session_id,
+    vicidial_live_agents.status AS status,
+    vicidial_live_agents.campaign_id AS campaign_id,
+    vicidial_live_agents.calls_today AS calls_today,
+    vicidial_live_agents.last_call_finish AS last_call_finish,
+    TIMESTAMPDIFF(MINUTE, vicidial_live_agents.last_call_finish, NOW()) AS minutes_since_last_call
+FROM 
+    vicidial_users
+JOIN 
+    vicidial_live_agents ON vicidial_users.user = vicidial_live_agents.user
+JOIN 
+    vicidial_user_groups ON vicidial_users.user_group = vicidial_user_groups.user_group
+where vicidial_user_groups.user_group = 'ADMIN';
+
+
+
+
+
+
+
+
+
+
+
+SELECT 
+    SUM(CASE WHEN vla.status IN ("INCALL", "QUEUE") THEN 1 ELSE 0 END) AS agent_incall,
+    COUNT(DISTINCT vla.campaign_id) AS agent_logged_in,
+    COUNT(DISTINCT CASE WHEN vla.status = "READY" THEN vla.campaign_id END) AS agents_waiting,
+    SUM(CASE WHEN vla.status = "PAUSED" THEN 1 ELSE 0 END) AS agent_paused,
+    COUNT(DISTINCT vla.campaign_id) AS agent_total,
+    
+    -- Subconsulta para los llamados activos
+    (SELECT COUNT(*) 
+     FROM vicidial_auto_calls vac 
+     WHERE vac.status NOT IN ("XFER")
+       AND (
+           (vac.call_type = "IN" AND vac.campaign_id IN (
+               SELECT closer_campaigns 
+               FROM vicidial_campaigns
+           ))
+           OR vac.call_type = "OUT"
+       )
+    ) AS current_active_calls,
+    
+    -- Subconsulta para los llamados esperando por agentes
+    (SELECT SUM(CASE WHEN vac.status = "LIVE" THEN 1 ELSE 0 END) 
+     FROM vicidial_auto_calls vac 
+     WHERE vac.status NOT IN ("XFER")
+       AND (
+           (vac.call_type = "IN" AND vac.campaign_id IN (
+               SELECT closer_campaigns 
+               FROM vicidial_campaigns
+           ))
+           OR vac.call_type = "OUT"
+       )
+    ) AS calls_waiting_for_agents,
+    
+    -- Subconsulta para los llamados en IVR
+    (SELECT SUM(CASE WHEN vac.status = "IVR" THEN 1 ELSE 0 END) 
+     FROM vicidial_auto_calls vac 
+     WHERE vac.status NOT IN ("XFER")
+       AND (
+           (vac.call_type = "IN" AND vac.campaign_id IN (
+               SELECT closer_campaigns 
+               FROM vicidial_campaigns
+           ))
+           OR vac.call_type = "OUT"
+       )
+    ) AS calls_in_IVR,
+    
+    -- Subconsulta para los llamados que están sonando
+    (SELECT SUM(CASE WHEN vac.status NOT IN ("LIVE", "IVR", "CLOSER") THEN 1 ELSE 0 END) 
+     FROM vicidial_auto_calls vac 
+     WHERE vac.status NOT IN ("XFER")
+       AND (
+           (vac.call_type = "IN" AND vac.campaign_id IN (
+               SELECT closer_campaigns 
+               FROM vicidial_campaigns
+           ))
+           OR vac.call_type = "OUT"
+       )
+    ) AS calls_ringing
+
+FROM 
+    vicidial_live_agents vla
+
+WHERE 
+    vla.campaign_id IN ('THOMPRUE') -- Filtro por campañas
+    AND vla.user IN ( 
+        SELECT vu.user 
+        FROM vicidial_users vu 
+        WHERE vu.user_group IN ('TESTSOUL') -- Filtro por grupos de usuario
+    );

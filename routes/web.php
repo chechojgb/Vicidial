@@ -56,3 +56,4 @@ Route::get('/locale/{locale}', function ($locale) {
 Route::get('test', [ControlAdmin::class, 'testView'])->name('test');
 Route::get('generate-pdf', [ControlAdmin::class, 'generatePdf'])->name('generate-pdf');
 Route::get('testBD', [ControlAdmin::class, 'testBD'])->name('testBD');
+
