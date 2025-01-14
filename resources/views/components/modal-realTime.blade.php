@@ -44,13 +44,13 @@
           <!-- Select User Groups -->
           <div>
             <label for="user-groups" class="block text-sm font-medium text-gray-700 mb-2">{{__('Select User Groups:')}}</label>
-            <select id="user-groups" name="user-groups" multiple class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-              <option>{{__('ALL-GROUPS')}} - All user groups</option>
+            <select id="user-groups" name="user_groups[]" multiple class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              <option>{{__('ALL-GROUPS')}}</option>
                 @if ($allUserGroups->count() > 0)
                     @foreach ($allUserGroups as $userGroup)
-                        <option value="{{$userGroup->user_group}}"
-                          
-                          >{{$userGroup->user_group}} - {{$userGroup->group_name}}</option>
+                    <option value="{{$userGroup->user_group}}"
+                      {{ in_array($userGroup->user_group, request('user_groups', [])) ? 'selected' : '' }}>
+                      {{$userGroup->user_group}} - {{$userGroup->group_name}}</option>
                     @endforeach
                 @else
                   <option>{{__('No User groups available')}}.</option>
@@ -107,3 +107,5 @@
     </div>
   </div>
 </div>
+
+

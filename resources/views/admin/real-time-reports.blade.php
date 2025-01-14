@@ -338,6 +338,11 @@
         console.log(`Seconds passed: ${secondsPassed}`);
     }, 1000);
 
+    
+
+   
+    
+
     document.addEventListener('DOMContentLoaded', function () {
         async function loadTableContent() {
             try {
