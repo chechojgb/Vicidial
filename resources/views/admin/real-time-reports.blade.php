@@ -15,7 +15,9 @@
     <x-modal-realTime :allCampaigns="$allCampaigns" :allUserGroups="$allUserGroups" :allSelectInGroups="$allSelectInGroups" :refreshRate="$refreshRate"/>
     
     
-      
+    
+    
+    
     <div
         class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start">
     </div>
@@ -84,7 +86,7 @@
                 aria-labelledby="profile-tab">
                 
 
-                  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                  <div class="">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 sm:rounded-lg border-collapse border-spacing-0">
                         <thead class="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 bg-soul-1 border-none sm:rounded-lg">
                             <tr>
@@ -131,9 +133,10 @@
                                         <td class="px-6 py-4">
                                             {{$table->ext}}
                                         </td>
-                                        <td class="px-6 py-4">
+                                        <td class="px-6 py-4" data-popover-target="{{ $table->name }}" >
                                             {{ $table->name ?? 'Nombre no disponible' }}
                                         </td>
+                                        <x-popoverUserInfo popoverId="{{ $table->name }}" />
                                         <td class="px-6 py-4">
                                             {{$table->user_group}}
                                         </td>
@@ -169,13 +172,13 @@
 
             </div>
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="real-time-reports" role="tabpanel" aria-labelledby="dashboard-tab">
-                <section class="py-16">
+                <section class="py-16" id="Real-Time-Reports">
                     <div class="max-w-8xl mx-auto px-6">
                       <h1 class="text-center text-gray-900 text-sm  tracking-wide uppercase mb-4">
                         Real Time Reports
                       </h1>
                       
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-10" >
                         <!-- Card 1 -->
                         <x-text-icon icon="fa-code" title="Dial Level" text="{{$stats->Dial_LEVEL ?? 0}}" />
                         <!-- Card 2 -->
@@ -226,7 +229,7 @@
                         <x-text-icon icon="fa-cogs" title="Order" text="{{$stats->ORDER_O ?? 0}}" />
                     </div>
                     </div>
-                  </section>
+                </section>
 
                  
                   
@@ -332,11 +335,11 @@
     const REFRESH_RATE = {{ $refreshRate }};
     console.log(REFRESH_RATE);
     
-    let secondsPassed = 0;
-    setInterval(() => {
-        secondsPassed++;
-        console.log(`Seconds passed: ${secondsPassed}`);
-    }, 1000);
+    // let secondsPassed = 0;
+    // setInterval(() => {
+    //     secondsPassed++;
+    //     console.log(`Seconds passed: ${secondsPassed}`);
+    // }, 1000);
 
     
 
@@ -372,10 +375,25 @@
             }
         }
 
+        async function loadReports() {
+            try {
+                const response = await fetch('/real-time-reports-refresh');
+                if (!response.ok) throw new Error('Error al cargar los reports');
+                if (response.ok) {
+                    console.log('Reports actualizados');
+                }
+                const iconContent = await response.text(); // Obtén el HTML como texto
+                document.querySelector('#Real-Time-Reports').innerHTML = iconContent;
+            } catch (error) {
+                console.error('Error al actualizar los reports:', error);
+            }
+        }
+
         // Esta función llama a ambas funciones en el mismo intervalo
         function loadContent() {
             loadTableContent();
             loadIcons();
+            loadReports();
         }
 
         setInterval(loadContent, REFRESH_RATE * 1000); // Ejecutar cada REFRESH_RATE segundos

@@ -4130,3 +4130,8 @@ h6 {
 .font-poppins {
   font-family: 'Poppins', sans-serif;
 }
+
+#view-user-group {
+  overflow: visible; /* Permite que los elementos hijos sobresalgan */
+  position: relative; /* Necesario para posicionamiento relativo */
+}

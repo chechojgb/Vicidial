@@ -48,6 +48,14 @@ class RealtimeReportController extends Controller
 
         return view('admin.partials.icon', compact('statsIcon'));
     }
+    public function refreshReports(Request $request)
+    {
+        $campaignIds = session('campaign_ids', []);
+        $userGroups = session('user_groups', []);
+        $stats = $this->getGeneralStats($campaignIds);
+
+        return view('admin.partials.reports', compact('stats'));
+    }
    
     #Prueba de funcion de refresco, sin confirmar
     private function getRefreshRate(Request $request)
