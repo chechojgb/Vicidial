@@ -43,6 +43,7 @@ Route::get('real/time/reports/admin', [RealtimeReportController::class, 'index']
 Route::get('/real-time-table-refresh', [RealtimeReportController::class, 'refreshTable'])->name('real-time-table-refresh');
 Route::get('/real-time-icon-refresh', [RealtimeReportController::class, 'refreshIcon'])->name('real-time-Icon-refresh');
 Route::get('/real-time-reports-refresh', [RealtimeReportController::class, 'refreshReports'])->name('real-time-reports-refresh');
+Route::get('/real-time-userStatus-refresh', [RealtimeReportController::class, 'refreshUserStatus'])->name('real-time-userStatus-refresh');
 
 Route::get('/locale/{locale}', function ($locale) {
     $available_locales = config('app.available_locales');

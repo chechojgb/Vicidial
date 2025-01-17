@@ -22,8 +22,8 @@
     <p class="text-center text-sm text-blue-500 mb-4">Detalle de la solicitud <i class="fas fa-info-circle"></i></p>
     <!-- Información -->
     <div class="text-sm text-gray-700 space-y-2">
-        <p><span class="font-medium">Agent:</span> Yesika Marcela Pardo</p>
-        <p><span class="font-medium">Campaign:</span> Montechelo</p>
+        <p><span class="font-medium">Agent:</span> {{$userName}}</p>
+        <p><span class="font-medium">Campaign:</span> {{$userCampaing}}</p>
         {{-- <p><span class="font-medium">Fecha de creación:</span> 14/05/2021</p> --}}
     </div>
     <div class="my-4 border-t border-gray-300"></div>

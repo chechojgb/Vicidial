@@ -7,6 +7,8 @@
 <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200 mt-2" >
 
     
+
+
     
 
       
@@ -37,25 +39,21 @@
             <x-button-state2 icon="fa-solid fa-user-plus" title="Agents in dispo" count="NONE" add="wrap-up stage" />
         </div>
 
-        <div class="flex justify-center my-6 -mx-3">
-            <span class="flex w-3 h-3 me-3 bg-gray-200 rounded-full cursor-pointer" data-popover-target="popover-user-spawn"></span>
-            <x-popover popoverId="popover-user-spawn" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-gray-900 rounded-full dark:bg-gray-700 cursor-pointer" data-popover-target="popover-user-dead"></span>
-            <x-popover popoverId="popover-user-dead" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-blue-600 rounded-full cursor-pointer" data-popover-target="popover-user-blue"></span>
-            <x-popover popoverId="popover-user-blue" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-green-500 rounded-full cursor-pointer" data-popover-target="popover-user-green"></span>
-            <x-popover popoverId="popover-user-green" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-red-500 rounded-full cursor-pointer" data-popover-target="popover-user-red"></span>
-            <x-popover popoverId="popover-user-red" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-purple-500 rounded-full cursor-pointer" data-popover-target="popover-user-purple"></span>
-            <x-popover popoverId="popover-user-purple" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-indigo-500 rounded-full cursor-pointer" data-popover-target="popover-user-purple_v2"></span>
-            <x-popover popoverId="popover-user-purple_v2" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-yellow-300 rounded-full cursor-pointer" data-popover-target="popover-user-yellow"></span>
-            <x-popover popoverId="popover-user-yellow" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
-            <span class="flex w-3 h-3 me-3 bg-teal-500 rounded-full cursor-pointer" data-popover-target="popover-user-green_v2"></span>
-            <x-popover popoverId="popover-user-green_v2" title="What is?" description="{{__('Used to view user groups and their details')}}."/>
+        <div id="userStatus">  
+            <div class="flex justify-center my-6 -mx-3" >
+            
+                @foreach ($userStatus as $userStatu)
+                    <div class="relative me-4" data-popover-target="{{$userStatu->name}}-1">
+                        <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="profile image">
+                        <span class="top-0 start-7 absolute w-3.5 h-3.5 
+                            {{ $userStatu->status === 'READY' ? 'bg-green-500' : ($userStatu->status === 'PAUSED' ? 'bg-yellow-500' : 'bg-red-500') }} 
+                            border-2 border-white dark:border-gray-800 rounded-full">
+                        </span>
+                    </div>
+                    
+                    <x-popoverUserStatus popoverId="{{ $userStatu->name }}-1" name="{{ $userStatu->name }}"  />
+                @endforeach
+            </div>
         </div>
 
         
@@ -136,7 +134,7 @@
                                         <td class="px-6 py-4" data-popover-target="{{ $table->name }}" >
                                             {{ $table->name ?? 'Nombre no disponible' }}
                                         </td>
-                                        <x-popoverUserInfo popoverId="{{ $table->name }}" />
+                                        <x-popoverUserInfo popoverId="{{ $table->name }}" userName="{{ $table->name }}" userCampaing="{{$table->campaign_id}}" />
                                         <td class="px-6 py-4">
                                             {{$table->user_group}}
                                         </td>
@@ -335,16 +333,11 @@
     const REFRESH_RATE = {{ $refreshRate }};
     console.log(REFRESH_RATE);
     
-    // let secondsPassed = 0;
-    // setInterval(() => {
-    //     secondsPassed++;
-    //     console.log(`Seconds passed: ${secondsPassed}`);
-    // }, 1000);
-
-    
-
-   
-    
+    let secondsPassed = 0;
+    setInterval(() => {
+        secondsPassed++;
+        console.log(`Seconds passed: ${secondsPassed}`);
+    }, 1000);
 
     document.addEventListener('DOMContentLoaded', function () {
         async function loadTableContent() {
@@ -389,14 +382,57 @@
             }
         }
 
+        async function loadUserStatus() {
+            try {
+                const response = await fetch('/real-time-userStatus-refresh');
+                if (!response.ok) throw new Error('Error al cargar los userStatus');
+                const iconContent = await response.text();
+                document.querySelector('#userStatus').innerHTML = iconContent;
+
+                // Re-inicializa los popovers
+                initializePopovers();
+            } catch (error) {
+                console.error('Error al actualizar los userStatus:', error);
+            }
+        }
+
+
+
+        // Función para inicializar popovers
+        function initializePopovers() {
+            const popoverElements = document.querySelectorAll('[data-popover-target]');
+            console.log('Elementos con popover encontrados:', popoverElements.length);
+
+            popoverElements.forEach((element) => {
+                const targetId = element.getAttribute('data-popover-target');
+                const target = document.getElementById(targetId);
+                if (target) {
+                    console.log(`Inicializando popover para: ${targetId}`);
+                    // Ajusta esto según la librería que estés usando
+                    try {
+                        new Popover(target, {
+                            placement: 'top',
+                            triggerType: 'hover',
+                        });
+                    } catch (error) {
+                        console.error(`Error al inicializar el popover para ${targetId}:`, error);
+                    }
+                } else {
+                    console.warn(`No se encontró el elemento de destino para: ${targetId}`);
+                }
+            });
+        }
+
+
         // Esta función llama a ambas funciones en el mismo intervalo
         function loadContent() {
             loadTableContent();
             loadIcons();
             loadReports();
+            loadUserStatus();
         }
 
-        setInterval(loadContent, REFRESH_RATE * 1000); // Ejecutar cada REFRESH_RATE segundos
+        setInterval(loadContent, REFRESH_RATE * 1000); 
     });
 </script>
 

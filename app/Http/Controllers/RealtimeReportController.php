@@ -21,12 +21,13 @@ class RealtimeReportController extends Controller
         $stats = $this->getGeneralStats($campaignIds);
         $statsIcon = $this->getAgentStats($campaignIds, $userGroups);
         $tables = $this->getActiveUsers($campaignIds, $userGroups);
+        $userStatus = $this->getActiveUsers($campaignIds, $userGroups);
         $allCampaigns = $this->getAllCampaigns();
         $allUserGroups = $this->getAllUserGroups();
         $allSelectInGroups = $this->getInboundGroups();
         
         return view('admin.real-time-reports', compact(
-            'stats', 'tables', 'statsIcon', 'allCampaigns', 'allUserGroups', 'allSelectInGroups', 'refreshRate'
+            'stats', 'tables', 'statsIcon', 'allCampaigns', 'allUserGroups', 'allSelectInGroups', 'refreshRate', 'userStatus'
         ));
 
     }
@@ -55,6 +56,15 @@ class RealtimeReportController extends Controller
         $stats = $this->getGeneralStats($campaignIds);
 
         return view('admin.partials.reports', compact('stats'));
+    }
+
+    public function refreshUserStatus(Request $request)
+    {
+        $campaignIds = session('campaign_ids', []);
+        $userGroups = session('user_groups', []);
+        $userStatus = $this->getActiveUsers($campaignIds, $userGroups);
+
+        return view('admin.partials.userStatus', compact('userStatus'));
     }
    
     #Prueba de funcion de refresco, sin confirmar
