@@ -8,9 +8,10 @@
                 <td class="px-6 py-4">
                     {{$table->ext}}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4" data-popover-target="{{ $table->name }}" >
                     {{ $table->name ?? 'Nombre no disponible' }}
                 </td>
+                <x-popoverUserInfo popoverId="{{ $table->name }}" userName="{{ $table->name }}" userCampaing="{{$table->campaign_id}}" />
                 <td class="px-6 py-4">
                     {{$table->user_group}}
                 </td>
